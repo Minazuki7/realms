@@ -4,17 +4,18 @@
  */
 
 import { NextRequest } from 'next/server';
-import { getProjects, addProject } from '@/lib/kv-cms';
+import { getKVValue, setKVValue } from '@/lib/kv-direct-api';
 import { verifyApiKey, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
 export const runtime = 'edge';
 
 export async function GET() {
   try {
-    const projects = await getProjects();
+    const projectsValue = await getKVValue('cms:projects');
+    const projects = projectsValue ? JSON.parse(projectsValue) : [];
     return createSuccessResponse(projects);
   } catch (error) {
-    console.error('Error fetching projects:', error);
+    console.error('[PROJECTS API] Error fetching projects:', error);
     return createErrorResponse('Failed to fetch projects', 500);
   }
 }
@@ -34,10 +35,23 @@ export async function POST(request: NextRequest) {
       return createErrorResponse('Missing required fields: id, title', 400);
     }
 
-    const result = await addProject(project);
+    // Get existing projects
+    const projectsValue = await getKVValue('cms:projects');
+    const projects = projectsValue ? JSON.parse(projectsValue) : [];
+    
+    // Add new project
+    projects.push(project);
+    
+    // Save to KV
+    const success = await setKVValue('cms:projects', JSON.stringify(projects));
+    if (!success) {
+      throw new Error('Failed to save projects to KV');
+    }
+    
+    const result = projects;
     return createSuccessResponse(result, 201);
   } catch (error) {
-    console.error('Error adding project:', error);
+    console.error('[PROJECTS API] Error adding project:', error);
     return createErrorResponse('Failed to add project', 500);
   }
 }

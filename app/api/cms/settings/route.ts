@@ -4,22 +4,22 @@
  */
 
 import { NextRequest } from 'next/server';
-import { getSettings, setSettings, updateSettings } from '@/lib/kv-cms';
+import { getKVValue, setKVValue } from '@/lib/kv-direct-api';
 import { verifyApiKey, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
 export const runtime = 'edge';
 
 export async function GET() {
   try {
-    const settings = await getSettings();
+    const settingsValue = await getKVValue('cms:settings');
     
-    if (!settings) {
+    if (!settingsValue) {
       return createErrorResponse('Settings not found', 404);
     }
 
-    return createSuccessResponse(settings);
+    return createSuccessResponse(JSON.parse(settingsValue));
   } catch (error) {
-    console.error('Error fetching settings:', error);
+    console.error('[SETTINGS API] Error fetching settings:', error);
     return createErrorResponse('Failed to fetch settings', 500);
   }
 }
@@ -39,20 +39,16 @@ export async function POST(request: NextRequest) {
       return createErrorResponse('Invalid request body', 400);
     }
 
-    // Update or create settings
-    let result;
-    const existingSettings = await getSettings();
+    // Save settings using REST API
+    const success = await setKVValue('cms:settings', JSON.stringify(body));
     
-    if (existingSettings) {
-      result = await updateSettings(body);
-    } else {
-      await setSettings(body);
-      result = body;
+    if (!success) {
+      throw new Error('Failed to save settings to KV');
     }
 
-    return createSuccessResponse(result);
+    return createSuccessResponse(body);
   } catch (error) {
-    console.error('Error updating settings:', error);
+    console.error('[SETTINGS API] Error updating settings:', error);
     return createErrorResponse('Failed to update settings', 500);
   }
 }

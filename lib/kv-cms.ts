@@ -3,14 +3,9 @@
  * Provides getter and setter functions for managing bio, projects, and settings
  */
 
-// Dynamic import to handle Cloudflare Pages environment
-let getRequestContext: any = null;
-try {
-  // Only available in Cloudflare Pages environment
-  const mod = require('@cloudflare/next-on-pages');
-  getRequestContext = mod.getRequestContext;
-} catch (e) {
-  // Not in Cloudflare Pages environment or not installed
+// Cloudflare Pages binding - will be injected at runtime
+declare global {
+  var ENVIRONMENT: any;
 }
 
 export interface Bio {
@@ -62,16 +57,22 @@ const KEYS = {
 
 /**
  * Get Cloudflare KV namespace
- * In development, falls back to in-memory storage
+ * In Cloudflare Pages, the binding is injected via the request context
  */
-function getKVNamespace() {
+export function getKVNamespace() {
   try {
-    const { env } = getRequestContext();
-    console.log('[KV-CMS] Got request context, env:', !!env);
-    console.log('[KV-CMS] env.CMS available:', !!env?.CMS);
-    return env.CMS;
+    // Try to get KV via globalThis (set by Cloudflare Pages)
+    const kv = (globalThis as any).CMS;
+    
+    if (kv && typeof kv.put === 'function' && typeof kv.get === 'function') {
+      console.log('[KV-CMS] KV namespace found via globalThis');
+      return kv;
+    }
+    
+    console.warn('[KV-CMS] CMS binding not properly available via globalThis');
+    return null;
   } catch (error) {
-    console.warn('[KV-CMS] KV namespace not available, falling back to memory:', error);
+    console.warn('[KV-CMS] Error accessing KV namespace:', error);
     return null;
   }
 }

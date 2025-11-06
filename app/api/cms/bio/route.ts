@@ -4,22 +4,22 @@
  */
 
 import { NextRequest } from 'next/server';
-import { getBio, setBio, updateBio } from '@/lib/kv-cms';
+import { getKVValue, setKVValue } from '@/lib/kv-direct-api';
 import { verifyApiKey, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
 export const runtime = 'edge';
 
 export async function GET() {
   try {
-    const bio = await getBio();
+    const bioValue = await getKVValue('cms:bio');
     
-    if (!bio) {
+    if (!bioValue) {
       return createErrorResponse('Bio not found', 404);
     }
 
-    return createSuccessResponse(bio);
+    return createSuccessResponse(JSON.parse(bioValue));
   } catch (error) {
-    console.error('Error fetching bio:', error);
+    console.error('[BIO API] Error fetching bio:', error);
     return createErrorResponse('Failed to fetch bio', 500);
   }
 }
@@ -44,22 +44,16 @@ export async function POST(request: NextRequest) {
       return createErrorResponse('Invalid request body', 400);
     }
 
-    // Update or create bio
-    let result;
-    const existingBio = await getBio();
-    console.log('[BIO API] Existing bio found:', !!existingBio);
+    // Save bio using REST API
+    console.log('[BIO API] Calling KV REST API to save bio');
+    const success = await setKVValue('cms:bio', JSON.stringify(body));
     
-    if (existingBio) {
-      console.log('[BIO API] Updating bio');
-      result = await updateBio(body);
-    } else {
-      console.log('[BIO API] Creating new bio');
-      await setBio(body);
-      result = body;
+    if (!success) {
+      throw new Error('Failed to save bio to KV');
     }
 
     console.log('[BIO API] Bio saved successfully');
-    return createSuccessResponse(result);
+    return createSuccessResponse(body);
   } catch (error) {
     console.error('[BIO API] Error updating bio:', error);
     return createErrorResponse('Failed to update bio', 500);
