@@ -67,9 +67,11 @@ const KEYS = {
 function getKVNamespace() {
   try {
     const { env } = getRequestContext();
+    console.log('[KV-CMS] Got request context, env:', !!env);
+    console.log('[KV-CMS] env.CMS available:', !!env?.CMS);
     return env.CMS;
   } catch (error) {
-    console.warn('KV namespace not available, using fallback');
+    console.warn('[KV-CMS] KV namespace not available, falling back to memory:', error);
     return null;
   }
 }
@@ -84,16 +86,19 @@ const memoryCache = new Map<string, any>();
  */
 async function getValue<T>(key: string): Promise<T | null> {
   const kv = getKVNamespace();
+  console.log(`[KV-CMS] getValue(${key}) - KV available:`, !!kv);
   
   if (!kv) {
+    console.log(`[KV-CMS] Using memory cache for getValue(${key})`);
     return memoryCache.get(key) || null;
   }
 
   try {
     const value = await kv.get(key);
+    console.log(`[KV-CMS] KV get(${key}) returned:`, !!value);
     return value ? JSON.parse(value) : null;
   } catch (error) {
-    console.error(`Error getting value from KV for key ${key}:`, error);
+    console.error(`[KV-CMS] Error getting value from KV for key ${key}:`, error);
     return null;
   }
 }
@@ -103,18 +108,22 @@ async function getValue<T>(key: string): Promise<T | null> {
  */
 async function setValue<T>(key: string, value: T, expirationTtl?: number): Promise<void> {
   const kv = getKVNamespace();
+  console.log(`[KV-CMS] setValue(${key}) - KV available:`, !!kv);
   
   if (!kv) {
+    console.log(`[KV-CMS] Using memory cache for setValue(${key})`);
     memoryCache.set(key, value);
     return;
   }
 
   try {
+    console.log(`[KV-CMS] Calling kv.put(${key}) with ttl:`, expirationTtl);
     await kv.put(key, JSON.stringify(value), {
       expirationTtl,
     });
+    console.log(`[KV-CMS] kv.put(${key}) completed successfully`);
   } catch (error) {
-    console.error(`Error setting value in KV for key ${key}:`, error);
+    console.error(`[KV-CMS] Error setting value in KV for key ${key}:`, error);
     throw error;
   }
 }
