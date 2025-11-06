@@ -1,0 +1,42 @@
+[
+  {
+    "id": "defendr-001",
+    "title": "Defendr.gg",
+    "description": "Managed dev team as Tech Lead/CTO, implemented scalable server architecture and CI/CD pipelines.",
+    "stack": ["Next.js", "React", "Docker", "NodeJS"],
+    "link": "",
+    "featured": true
+  },
+  {
+    "id": "beefood-002",
+    "title": "BeeFood",
+    "description": "Solo-developed full food delivery platform with NestJS backend and React frontend using GraphQL and Docker.",
+    "stack": ["NestJS", "React", "GraphQL", "MongoDB", "Docker"],
+    "link": "",
+    "featured": true
+  },
+  {
+    "id": "foodai-003",
+    "title": "Food Suggestion AI",
+    "description": "AI-based personalized food recommendation system built with Python and TensorFlow.",
+    "stack": ["Python", "TensorFlow", "ML"],
+    "link": "",
+    "featured": false
+  },
+  {
+    "id": "picclic-004",
+    "title": "PicClic",
+    "description": "Web scraping and image manipulation tool with React frontend and MongoDB backend.",
+    "stack": ["Express", "React", "MongoDB", "GraphQL", "TailwindCSS"],
+    "link": "",
+    "featured": false
+  },
+  {
+    "id": "upkrus-005",
+    "title": "Upkrus - E-Learning Enhancement",
+    "description": "Refactored code and improved API structure for a learning platform built with NestJS, React, and Angular.",
+    "stack": ["NestJS", "Express.js", "React", "Angular", "GraphQL"],
+    "link": "",
+    "featured": false
+  }
+]

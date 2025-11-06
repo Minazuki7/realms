@@ -1,0 +1,16 @@
+{
+  "name": "Nour Azouz",
+  "title": "Software Engineer / Tech Lead / CTO",
+  "intro": "Dedicated Software Engineer with 4+ years experience in full-stack development, desktop apps, and DevOps. Passionate about mentoring and impactful projects.",
+  "email": "nourazouz7@gmail.com",
+  "github": "https://github.com/minazuki7",
+  "linkedin": "https://www.linkedin.com/in/nour-az/",
+  "photo": "/assets/profile.jpg",
+  "about": "With 4+ years of experience in full-stack development, I specialize in creating scalable web applications, desktop software, and robust DevOps pipelines. I've led teams as a Tech Lead and CTO, managing development workflows and mentoring junior developers.",
+  "skills": {
+    "languages": ["TypeScript", "JavaScript", "Python", "C#"],
+    "frontend": ["React", "Next.js", "Angular", "TailwindCSS"],
+    "backend": ["NestJS", "Express.js", "NodeJS", "GraphQL"],
+    "tools": ["Docker", "Git", "CI/CD", "MongoDB", "PostgreSQL"]
+  }
+}

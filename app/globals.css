@@ -1,0 +1,621 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Classic Light Mode - Purple/Pink sophisticated palette */
+  --background: oklch(0.96 0.015 310);
+  --foreground: oklch(0.15 0.06 300);
+  --card: oklch(0.985 0.01 310);
+  --card-foreground: oklch(0.12 0.05 300);
+  --popover: oklch(0.99 0.008 310);
+  --popover-foreground: oklch(0.12 0.05 300);
+  --primary: oklch(0.52 0.24 290);
+  --primary-foreground: oklch(0.98 0.01 310);
+  --secondary: oklch(0.88 0.1 320);
+  --secondary-foreground: oklch(0.15 0.05 300);
+  --muted: oklch(0.92 0.05 310);
+  --muted-foreground: oklch(0.55 0.04 300);
+  --accent: oklch(0.62 0.24 290);
+  --accent-foreground: oklch(0.98 0.01 310);
+  --destructive: oklch(0.63 0.25 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.9 0.06 310);
+  --input: oklch(0.94 0.04 310);
+  --ring: oklch(0.52 0.24 290);
+  --chart-1: oklch(0.62 0.24 290);
+  --chart-2: oklch(0.65 0.2 40);
+  --chart-3: oklch(0.75 0.18 160);
+  --chart-4: oklch(0.62 0.2 350);
+  --chart-5: oklch(0.7 0.15 90);
+  --radius: 0.5rem;
+
+  /* Fantasy-specific tokens */
+  --glow: oklch(0.65 0.2 280);
+  --mystical: oklch(0.55 0.25 300);
+  --arcane: oklch(0.45 0.2 260);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  /* Neo-futuristic dark mode with richer background and LED glow effects */
+  --background: oklch(0.095 0.015 290);
+  --foreground: oklch(0.97 0.02 280);
+  --card: oklch(0.14 0.025 295);
+  --card-foreground: oklch(0.95 0.025 280);
+  --popover: oklch(0.12 0.02 295);
+  --popover-foreground: oklch(0.96 0.03 280);
+  --primary: oklch(0.68 0.28 280);
+  --primary-foreground: oklch(0.095 0.015 290);
+  --secondary: oklch(0.32 0.12 290);
+  --secondary-foreground: oklch(0.95 0.03 280);
+  --muted: oklch(0.28 0.08 290);
+  --muted-foreground: oklch(0.76 0.06 285);
+  --accent: oklch(0.72 0.26 275);
+  --accent-foreground: oklch(0.095 0.015 290);
+  --destructive: oklch(0.65 0.23 25);
+  --destructive-foreground: oklch(0.96 0.03 280);
+  --border: oklch(0.2 0.08 295);
+  --input: oklch(0.17 0.06 295);
+  --ring: oklch(0.68 0.28 280);
+
+  /* Updated fantasy mode colors - keeping red/berserker feel */
+  --glow: oklch(0.75 0.22 50);
+  --mystical: oklch(0.65 0.25 300);
+  --arcane: oklch(0.7 0.22 280);
+  --chart-1: oklch(0.68 0.2 300);
+  --chart-2: oklch(0.75 0.18 160);
+  --chart-3: oklch(0.62 0.2 350);
+  --chart-4: oklch(0.58 0.22 40);
+  --chart-5: oklch(0.72 0.18 90);
+}
+
+.light {
+  /* Light mode with purple-pinkish palette, avoiding blue */
+  --background: oklch(0.97 0.012 310);
+  --foreground: oklch(0.13 0.05 300);
+  --card: oklch(0.986 0.012 310);
+  --card-foreground: oklch(0.13 0.05 300);
+  --popover: oklch(0.99 0.01 310);
+  --popover-foreground: oklch(0.13 0.05 300);
+  --primary: oklch(0.5 0.26 300);
+  --primary-foreground: oklch(0.97 0.012 310);
+  --secondary: oklch(0.88 0.12 320);
+  --secondary-foreground: oklch(0.18 0.05 300);
+  --muted: oklch(0.92 0.06 315);
+  --muted-foreground: oklch(0.55 0.05 305);
+  --accent: oklch(0.6 0.26 295);
+  --accent-foreground: oklch(0.97 0.012 310);
+  --destructive: oklch(0.63 0.25 25);
+  --destructive-foreground: oklch(0.97 0.012 310);
+  --border: oklch(0.9 0.08 315);
+  --input: oklch(0.94 0.05 315);
+  --ring: oklch(0.5 0.26 300);
+  --chart-1: oklch(0.6 0.26 295);
+  --chart-2: oklch(0.65 0.2 40);
+  --chart-3: oklch(0.72 0.18 160);
+  --chart-4: oklch(0.62 0.2 350);
+  --chart-5: oklch(0.7 0.15 90);
+}
+
+/* Add fantasy-specific color variables and cursor styling separate from classic mode */
+.fantasy-mode {
+  /* Light mode - Magical journey with fairies: cyan, purple, pink */
+  --fantasy-light-bg: oklch(0.98 0.008 290);
+  --fantasy-light-card: oklch(0.99 0.006 295);
+  --fantasy-light-primary: oklch(0.55 0.22 260);
+  --fantasy-light-accent: oklch(0.65 0.24 290);
+  --fantasy-light-text: oklch(0.12 0.05 280);
+  --fantasy-light-glow: oklch(0.6 0.25 270);
+  --fantasy-light-fairy-pink: oklch(0.72 0.18 330);
+  --fantasy-light-fairy-cyan: oklch(0.68 0.2 240);
+}
+
+.fantasy-mode.dark {
+  /* Dark mode - Berserk/Dark Souls/Elden Ring feel: black, red, bloody purple */
+  --fantasy-dark-bg: oklch(0.08 0.01 280);
+  --fantasy-dark-card: oklch(0.11 0.02 290);
+  --fantasy-dark-primary: oklch(0.62 0.26 350);
+  --fantasy-dark-accent: oklch(0.65 0.22 280);
+  --fantasy-dark-text: oklch(0.93 0.025 290);
+  --fantasy-dark-glow: oklch(0.7 0.24 350);
+  --fantasy-dark-blood-red: oklch(0.58 0.28 30);
+  --fantasy-dark-dark-purple: oklch(0.35 0.15 290);
+}
+
+/* Custom fantasy cursors */
+.fantasy-mode {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M8 2l4 12h2l-4-12zm12 8l4 12h2l-4-12zm-8 8l4 12h2l-4-12z" fill="%238b5cf6"/></svg>')
+    8 0, auto;
+}
+
+.fantasy-mode.dark {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M8 2l4 12h2l-4-12zm12 8l4 12h2l-4-12zm-8 8l4 12h2l-4-12z" fill="%23ef4444"/></svg>')
+    8 0, auto;
+}
+
+@theme inline {
+  --font-sans: "Geist", "Geist Fallback";
+  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 8px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+
+  /* Neo LED glow effect for dark mode */
+  .dark .neo-glow {
+    box-shadow: 0 0 20px rgba(162, 28, 255, 0.4), 0 0 40px rgba(162, 28, 255, 0.2), inset 0 0 20px
+      rgba(162, 28, 255, 0.1);
+  }
+
+  .dark .neo-glow:hover {
+    box-shadow: 0 0 30px rgba(162, 28, 255, 0.6), 0 0 60px rgba(162, 28, 255, 0.3), inset 0 0 20px
+      rgba(162, 28, 255, 0.15);
+  }
+
+  /* LED button glow effects */
+  .dark .led-button {
+    box-shadow: 0 0 10px rgba(162, 28, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: rgba(162, 28, 255, 0.5);
+  }
+
+  .dark .led-button:hover {
+    box-shadow: 0 0 20px rgba(162, 28, 255, 0.6), 0 0 30px rgba(162, 28, 255, 0.3), inset 0 1px 0
+      rgba(255, 255, 255, 0.15);
+    border-color: rgba(162, 28, 255, 0.8);
+  }
+
+  /* Glow effect utilities for fantasy mode */
+  @supports (filter: drop-shadow(0 0 20px currentColor)) {
+    .glow {
+      filter: drop-shadow(0 0 10px var(--glow)) drop-shadow(0 0 20px var(--glow));
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      filter: drop-shadow(0 0 10px var(--glow)) drop-shadow(0 0 20px var(--glow));
+      opacity: 0.8;
+    }
+    50% {
+      filter: drop-shadow(0 0 20px var(--glow)) drop-shadow(0 0 30px var(--glow));
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes rotate-in {
+    from {
+      opacity: 0;
+      transform: rotate(-10deg) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+    }
+  }
+
+  @keyframes bounce-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes text-shimmer {
+    0% {
+      background-position: 0% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  @keyframes infinite-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+}
+
+/* Fantasy mode animations and glow effects */
+@keyframes fantasy-glow-light {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px var(--fantasy-light-glow)) drop-shadow(0 0 15px var(--fantasy-light-fairy-cyan));
+    opacity: 0.9;
+  }
+  50% {
+    filter: drop-shadow(0 0 15px var(--fantasy-light-glow)) drop-shadow(0 0 25px var(--fantasy-light-fairy-cyan));
+    opacity: 1;
+  }
+}
+
+@keyframes fantasy-glow-dark {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px var(--fantasy-dark-blood-red)) drop-shadow(0 0 15px var(--fantasy-dark-glow));
+    opacity: 0.85;
+  }
+  50% {
+    filter: drop-shadow(0 0 15px var(--fantasy-dark-blood-red)) drop-shadow(0 0 25px var(--fantasy-dark-glow));
+    opacity: 1;
+  }
+}
+
+@keyframes portal-shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes locked-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@layer components {
+  .smooth-transition {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  /* Added premium gradient and blur effects for modern design */
+  .gradient-purple {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  }
+
+  .gradient-subtle {
+    background: linear-gradient(180deg, var(--card) 0%, var(--secondary) 100%);
+  }
+
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .premium-border {
+    position: relative;
+    border: 1px solid var(--border);
+    background: linear-gradient(var(--card), var(--card)) padding-box;
+    background-clip: padding-box;
+  }
+
+  /* Added gradient background utilities for dark and light modes */
+  .gradient-portal-dark {
+    background: linear-gradient(
+      to bottom right,
+      oklch(0.095 0.015 290),
+      oklch(0.12 0.02 295),
+      oklch(0.14 0.025 300),
+      oklch(0.11 0.018 285)
+    );
+  }
+
+  .gradient-portal-light {
+    background: linear-gradient(
+      to bottom right,
+      oklch(0.97 0.012 310),
+      oklch(0.975 0.015 305),
+      oklch(0.965 0.018 315),
+      oklch(0.98 0.01 300)
+    );
+  }
+
+  /* Enhanced gradient backgrounds with animated overlays */
+  .gradient-bg-animated {
+    position: relative;
+    background: linear-gradient(135deg, var(--background), var(--card), var(--secondary));
+    animation: gradientShift 15s ease infinite;
+    background-size: 200% 200%;
+  }
+
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Neo-futuristic button styling with LED effects - removed @apply group */
+  .dark .neo-button {
+    position: relative;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    overflow: hidden;
+    transition-property: all;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(135deg, rgba(162, 28, 255, 0.2), rgba(168, 85, 247, 0.15));
+    border: 1.5px solid rgba(162, 28, 255, 0.5);
+    box-shadow: 0 0 15px rgba(162, 28, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .dark .neo-button:hover {
+    background: linear-gradient(135deg, rgba(162, 28, 255, 0.35), rgba(168, 85, 247, 0.25));
+    border-color: rgba(162, 28, 255, 0.8);
+    box-shadow: 0 0 25px rgba(162, 28, 255, 0.5), 0 0 40px rgba(162, 28, 255, 0.2), inset 0 1px 0
+      rgba(255, 255, 255, 0.15);
+  }
+
+  /* Smooth futuristic animations */
+  @keyframes neo-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 15px rgba(162, 28, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    50% {
+      box-shadow: 0 0 25px rgba(162, 28, 255, 0.5), 0 0 35px rgba(162, 28, 255, 0.2), inset 0 1px 0
+        rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  .dark .animate-neo-pulse {
+    animation: neo-pulse 2s ease-in-out infinite;
+  }
+
+  /* Animation utility classes for reusable animations */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .animate-fade-in-down {
+    animation: fadeInDown 0.6s ease-out;
+  }
+
+  .animate-fade-in-left {
+    animation: fadeInLeft 0.6s ease-out;
+  }
+
+  .animate-fade-in-right {
+    animation: fadeInRight 0.6s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .animate-rotate-in {
+    animation: rotate-in 0.6s ease-out;
+  }
+
+  .animate-bounce-in {
+    animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .animate-text-shimmer {
+    background: linear-gradient(90deg, var(--foreground), var(--accent), var(--foreground));
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: text-shimmer 3s linear infinite;
+  }
+
+  /* Stagger animations for sequential elements */
+  .stagger-1 {
+    animation-delay: 0.1s;
+  }
+
+  .stagger-2 {
+    animation-delay: 0.2s;
+  }
+
+  .stagger-3 {
+    animation-delay: 0.3s;
+  }
+
+  .stagger-4 {
+    animation-delay: 0.4s;
+  }
+
+  .stagger-5 {
+    animation-delay: 0.5s;
+  }
+
+  /* Scroll-based visibility classes */
+  .opacity-0 {
+    opacity: 0;
+  }
+
+  .opacity-100 {
+    opacity: 1;
+  }
+}
