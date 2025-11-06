@@ -32,7 +32,7 @@ export function ClassicProjects() {
         <StaggeredContainer staggerDelay={100}>
           {projects.map((project) => (
             <AnimatedSection key={project.id} animation="fade-up">
-              <div className="group relative rounded-2xl overflow-hidden hover:scale-[1.02] smooth-transition cursor-pointer dark:neo-glow">
+              <div className="group relative rounded-2xl overflow-hidden hover:scale-[1.02] smooth-transition cursor-pointer dark:neo-glow ">
                 <div className="absolute inset-0 bg-white/[0.02] backdrop-blur-lg rounded-2xl border border-white/10 group-hover:border-primary/50 group-hover:bg-white/[0.08] smooth-transition dark:border-purple-500/40 dark:group-hover:border-primary/70" />
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-accent/12 opacity-0 group-hover:opacity-100 smooth-transition rounded-2xl dark:from-primary/25 dark:to-accent/20" />
 

@@ -9,6 +9,8 @@ import { createErrorResponse, createSuccessResponse } from '@/lib/auth';
 const ADMIN_PASSWORD = process.env.CMS_ADMIN_PASSWORD || 'admin-password-change-me';
 const ADMIN_API_KEY = process.env.CMS_ADMIN_API_KEY || 'dev-key-change-in-production';
 
+export const runtime = 'edge';
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();

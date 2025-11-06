@@ -11,6 +11,8 @@ interface RouteParams {
   params: Promise<{ id: string }>;
 }
 
+export const runtime = 'edge';
+
 export async function PATCH(request: NextRequest, { params }: RouteParams) {
   try {
     // Verify authentication

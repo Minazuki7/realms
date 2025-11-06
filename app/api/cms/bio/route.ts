@@ -7,6 +7,8 @@ import { NextRequest } from 'next/server';
 import { getBio, setBio, updateBio } from '@/lib/kv-cms';
 import { verifyApiKey, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
+export const runtime = 'edge';
+
 export async function GET() {
   try {
     const bio = await getBio();
