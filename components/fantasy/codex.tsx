@@ -1,11 +1,31 @@
-"use client"
+"use client";
 
-import { RealmCard } from "./realm-card"
-import { getContent } from "@/lib/content-cms"
+import { useEffect, useState } from "react";
+import { RealmCard } from "./realm-card";
+import { getContent, loadContent } from "@/lib/content-cms";
+import type { PortfolioContent } from "@/lib/content-cms";
 
 export function CodexRealm() {
-  const content = getContent()
-  const codex = content.fantasy.codex
+  const [content, setContent] = useState<PortfolioContent | null>(null);
+
+  useEffect(() => {
+    // Load fresh content from KV on mount
+    loadContent()
+      .then(setContent)
+      .catch(() => {
+        setContent(getContent());
+      });
+  }, []);
+
+  if (!content) {
+    return (
+      <section id="codex" className="py-16 px-6">
+        <div />
+      </section>
+    );
+  }
+
+  const codex = content.fantasy.codex;
 
   const arcaneArts = [
     {
@@ -21,23 +41,37 @@ export function CodexRealm() {
     {
       rune: "🎨",
       name: "Design Enchantments",
-      powers: ["TailwindCSS Weaving", "Responsive Transmutation", "Animation Magic"],
+      powers: [
+        "TailwindCSS Weaving",
+        "Responsive Transmutation",
+        "Animation Magic",
+      ],
     },
     {
       rune: "🔮",
       name: "Arcane Knowledge",
-      powers: ["TypeScript Runes", "PostgreSQL Divination", "System Architecture"],
+      powers: [
+        "TypeScript Runes",
+        "PostgreSQL Divination",
+        "System Architecture",
+      ],
     },
-  ]
+  ];
 
   return (
     <section id="codex" className="py-16 px-6">
       <div className="max-w-4xl mx-auto">
-        <RealmCard title={codex.title} description={codex.description} content={codex.content} />
+        <RealmCard
+          title={codex.title}
+          description={codex.description}
+          content={codex.content}
+        />
 
         {/* Arcane Arts Grid */}
         <div className="mt-20 space-y-8">
-          <h2 className="text-2xl font-bold text-mystical">Arcane Arts Mastered</h2>
+          <h2 className="text-2xl font-bold text-mystical">
+            Arcane Arts Mastered
+          </h2>
           <div className="grid md:grid-cols-2 gap-6">
             {arcaneArts.map((art, idx) => (
               <div
@@ -50,7 +84,10 @@ export function CodexRealm() {
                     <h3 className="font-bold text-mystical mb-3">{art.name}</h3>
                     <ul className="space-y-1">
                       {art.powers.map((power, pidx) => (
-                        <li key={pidx} className="text-sm text-muted-foreground flex items-center gap-2">
+                        <li
+                          key={pidx}
+                          className="text-sm text-muted-foreground flex items-center gap-2"
+                        >
                           <span className="w-1 h-1 rounded-full bg-mystical" />
                           {power}
                         </li>
@@ -64,5 +101,5 @@ export function CodexRealm() {
         </div>
       </div>
     </section>
-  )
+  );
 }

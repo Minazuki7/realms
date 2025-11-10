@@ -1,10 +1,14 @@
-import { getBio, getSettings } from "@/lib/cms";
+import { getBio, getSettings } from "@/lib/cms-loader";
 import { AnimatedSection } from "@/components/animated-section";
 import { ContactForm } from "@/components/contact-form";
 
-export function ClassicContact() {
-  const bio = getBio();
-  const settings = getSettings();
+export async function ClassicContact() {
+  const bio = await getBio();
+  const settings = await getSettings();
+
+  if (!bio || !settings) {
+    return <section>Contact data not available</section>;
+  }
 
   return (
     <section id="contact" className="relative py-20 px-6 overflow-hidden">

@@ -1,13 +1,33 @@
-"use client"
+"use client";
 
-import { RealmCard } from "./realm-card"
-import { getContent } from "@/lib/content-cms"
-import { AnimatedSection } from "@/components/animated-section"
-import { HoverCardAnimated } from "@/components/hover-card-animated"
+import { useEffect, useState } from "react";
+import { RealmCard } from "./realm-card";
+import { getContent, loadContent } from "@/lib/content-cms";
+import type { PortfolioContent } from "@/lib/content-cms";
+import { AnimatedSection } from "@/components/animated-section";
+import { HoverCardAnimated } from "@/components/hover-card-animated";
 
 export function OriginRealm() {
-  const content = getContent()
-  const origin = content.fantasy.origin
+  const [content, setContent] = useState<PortfolioContent | null>(null);
+
+  useEffect(() => {
+    // Load fresh content from KV on mount
+    loadContent()
+      .then(setContent)
+      .catch(() => {
+        setContent(getContent());
+      });
+  }, []);
+
+  if (!content) {
+    return (
+      <section id="origin" className="py-16 px-6">
+        Loading...
+      </section>
+    );
+  }
+
+  const origin = content.fantasy.origin;
 
   return (
     <section id="origin" className="py-16 px-6">
@@ -24,7 +44,9 @@ export function OriginRealm() {
         {/* Journey Timeline */}
         <AnimatedSection animation="fade-up" delay={300}>
           <div className="mt-20 space-y-8">
-            <h2 className="text-2xl font-bold text-mystical">The Journey Thus Far</h2>
+            <h2 className="text-2xl font-bold text-mystical">
+              The Journey Thus Far
+            </h2>
             <div className="space-y-6">
               {[
                 {
@@ -56,14 +78,22 @@ export function OriginRealm() {
                     {/* Timeline dot */}
                     <div className="flex flex-col items-center">
                       <div className="w-3 h-3 rounded-full bg-mystical animate-glow-pulse" />
-                      {idx < 3 && <div className="w-0.5 h-12 bg-gradient-to-b from-mystical to-transparent mt-3" />}
+                      {idx < 3 && (
+                        <div className="w-0.5 h-12 bg-gradient-to-b from-mystical to-transparent mt-3" />
+                      )}
                     </div>
 
                     {/* Content */}
                     <div className="pb-6">
-                      <p className="text-sm text-mystical font-semibold">{milestone.year}</p>
-                      <h3 className="text-lg font-bold mt-1">{milestone.event}</h3>
-                      <p className="text-muted-foreground text-sm mt-1">{milestone.description}</p>
+                      <p className="text-sm text-mystical font-semibold">
+                        {milestone.year}
+                      </p>
+                      <h3 className="text-lg font-bold mt-1">
+                        {milestone.event}
+                      </h3>
+                      <p className="text-muted-foreground text-sm mt-1">
+                        {milestone.description}
+                      </p>
                     </div>
                   </div>
                 </HoverCardAnimated>
@@ -73,5 +103,5 @@ export function OriginRealm() {
         </AnimatedSection>
       </div>
     </section>
-  )
+  );
 }

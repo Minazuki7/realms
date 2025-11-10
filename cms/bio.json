@@ -1,16 +1,89 @@
 {
   "name": "Nour Azouz",
-  "title": "Software Engineer / Tech Lead / CTO",
-  "intro": "Dedicated Software Engineer with 4+ years experience in full-stack development, desktop apps, and DevOps. Passionate about mentoring and impactful projects.",
+  "title": "Full-Stack Software Engineer | Tech Lead, CTO, Instructor",
+  "intro": "Full-Stack Software Engineer with 4+ years shipping production systems across web, mobile & desktop. Daily hands-on coding: architecting microservices, building scalable APIs, optimizing performance. Led teams as Tech Lead/CTO. Expertise: TypeScript, React, NestJS, DevOps. 30+ projects shipped.",
   "email": "nourazouz7@gmail.com",
+  "phone": "+216 29246524",
   "github": "https://github.com/minazuki7",
   "linkedin": "https://www.linkedin.com/in/nour-az/",
   "photo": "/assets/profile.jpg",
-  "about": "With 4+ years of experience in full-stack development, I specialize in creating scalable web applications, desktop software, and robust DevOps pipelines. I've led teams as a Tech Lead and CTO, managing development workflows and mentoring junior developers.",
+  "about": "I'm a full-stack engineer who leads by example. With 4+ years of hands-on experience, I don't just manage teams—I code with them, architect solutions, and ship features. At Defendr.gg, I served as CTO/Tech Lead: designed scalable microservices, led a team of 8+, conducted code reviews, built CI/CD pipelines (40% faster deployments), and optimized performance by 5%. I'm equally comfortable implementing features as I am mentoring junior developers and teaching at GoMyCode. I believe the best leaders ship code. I thrive in fast-paced environments solving complex engineering problems, whether as individual contributor, tech lead, or architect. Passionate about modern tooling, DevOps practices, and building high-performing teams.",
+  "targetRoles": [
+    "Full-Stack Software Engineer",
+    "Senior Full-Stack Engineer",
+    "Backend Engineer",
+    "Frontend Engineer",
+    "Tech Lead",
+    "Senior Software Engineer"
+  ],
+  "availability": "Open to new opportunities",
+  "yearsOfExperience": 4,
+  "stats": [
+    {
+      "label": "Projects Shipped",
+      "value": "30+",
+      "description": "Full-stack projects built end-to-end"
+    },
+    {
+      "label": "Lines of Code",
+      "value": "100k+",
+      "description": "Written & shipped to production"
+    },
+    {
+      "label": "Performance Gains",
+      "value": "5%+",
+      "description": "Through optimization & architecture"
+    },
+    {
+      "label": "Team Mentored",
+      "value": "50+",
+      "description": "Developers & students trained"
+    }
+  ],
+  "keyAchievements": [
+    "Shipped 30+ full-stack projects from concept to production, owning entire architecture & implementation",
+    "Led CTO/Tech Lead role at Defendr.gg while actively coding—architected microservices in NestJS, conducting PRs, shipping features",
+    "Built scalable backend infrastructure: designed APIs handling 10k+ daily transactions, orchestrated Docker containerization, automated CI/CD reducing deployment time by 40%",
+    "Full-stack technical depth: developed BeeFood platform solo (React frontend, NestJS backend, Flutter mobile, GraphQL API)",
+    "AI/ML engineering: Designed and trained TensorFlow models for personalized recommendations (food suggestion system)",
+    "Performance optimization: Improved load times by 5% through code refactoring; optimized database queries and caching strategies",
+    "Team building & mentoring: Managed 8+ engineers as Tech Lead, conducted code reviews, established best practices, mentored 5+ junior developers",
+    "Teaching & knowledge sharing: Part-time instructor at GoMyCode teaching TypeScript, React, Node.js to 50+ students; strong communicator of complex concepts",
+    "Enterprise security: Implemented authentication systems, improved security protocols, handled sensitive data management",
+    "Full tech stack mastery: Expert in TypeScript/JavaScript, React, NestJS; Advanced in GraphQL, MongoDB, Docker, CI/CD; Proficient in Python, TensorFlow, Mobile (React Native, Flutter)"
+  ],
   "skills": {
-    "languages": ["TypeScript", "JavaScript", "Python", "C#"],
-    "frontend": ["React", "Next.js", "Angular", "TailwindCSS"],
-    "backend": ["NestJS", "Express.js", "NodeJS", "GraphQL"],
-    "tools": ["Docker", "Git", "CI/CD", "MongoDB", "PostgreSQL"]
+    "frontend": {
+      "expert": ["TypeScript", "JavaScript", "React", "Next.js"],
+      "advanced": ["HTML", "CSS", "Tailwind CSS", "Angular", "State Management"]
+    },
+    "backend": {
+      "expert": ["Node.js", "NestJS", "TypeScript"],
+      "advanced": [
+        "Express.js",
+        "GraphQL",
+        "REST APIs",
+        "Microservices Architecture"
+      ]
+    },
+    "databases": {
+      "advanced": ["MongoDB", "PostgreSQL", "MySQL"]
+    },
+    "devops": {
+      "advanced": ["Docker", "CI/CD Pipelines", "Git/GitHub", "Linux"]
+    },
+    "aiml": {
+      "intermediate": ["Python", "TensorFlow", "Machine Learning Basics"]
+    },
+    "mobile": {
+      "intermediate": ["React Native", "Flutter"]
+    },
+    "tools": {
+      "proficient": ["Postman", "Figma", "Slack", "Visual Studio Code", "Git"]
+    },
+    "methodologies": {
+      "expert": ["Agile", "Code Review", "Clean Code"],
+      "advanced": ["DevOps Practices", "Mentoring", "Technical Teaching"]
+    }
   }
 }

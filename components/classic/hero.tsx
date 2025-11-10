@@ -1,12 +1,16 @@
-import { getBio } from "@/lib/cms";
+import { getBio } from "@/lib/cms-loader";
 import { AnimatedSection } from "@/components/animated-section";
 import { HoverCardAnimated } from "@/components/hover-card-animated";
 import AnimatedGradientName from "@/components/animated-gradient-name";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-const ClassicHero = () => {
-  const bio = getBio();
+const ClassicHero = async () => {
+  const bio = await getBio();
+
+  if (!bio) {
+    return <div>Bio data not available</div>;
+  }
 
   const [firstName, ...lastNameArr] = bio.name.split(" ");
   const lastName = lastNameArr.join(" ");
@@ -105,11 +109,13 @@ const ClassicHero = () => {
         </AnimatedSection>
 
         <div className="grid grid-cols-3 gap-4 pt-16">
-          {[
-            { label: "Projects", value: "30+" },
-            { label: "Clients", value: "50+" },
-            { label: "Experience", value: "8yrs" },
-          ].map((stat) => (
+          {(
+            bio.stats || [
+              { label: "Projects", value: "30+" },
+              { label: "Clients", value: "50+" },
+              { label: "Experience", value: "8yrs" },
+            ]
+          ).map((stat) => (
             <div
               key={stat.label}
               className="group relative p-4 rounded-xl overflow-hidden hover:scale-105 smooth-transition dark:neo-glow"

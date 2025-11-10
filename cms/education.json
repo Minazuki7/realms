@@ -1,0 +1,28 @@
+[
+  {
+    "id": "esprit-engineering",
+    "institution": "The Private Higher School of Engineering and Technology (ESPRIT)",
+    "degree": "National Engineering Degree",
+    "field": "Software Engineering",
+    "startDate": "2019-09-01",
+    "endDate": "2022-12-23",
+    "location": "Ariana",
+    "country": "Tunisia",
+    "description": "Comprehensive engineering degree equivalent to Master's level focusing on software development, architecture, and information technology.",
+    "eqfLevel": "EQF Level 7",
+    "credits": 180,
+    "url": "https://esprit.tn/"
+  },
+  {
+    "id": "ipeit-preengineering",
+    "institution": "Institut Préparatoire aux Études d'Ingénieurs de Tunis (IPEIT)",
+    "degree": "Pre-engineering Degree",
+    "field": "Mathematics & Physics",
+    "startDate": "2016-08-01",
+    "endDate": "2019-06-30",
+    "location": "Tunis",
+    "country": "Tunisia",
+    "description": "Foundational two-year program preparing for engineering studies with focus on mathematics, physics, and scientific problem-solving.",
+    "url": "http://www.ipeit.rnu.tn/"
+  }
+]

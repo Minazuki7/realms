@@ -52,3 +52,5 @@ export async function POST(request: NextRequest) {
     return createErrorResponse('Failed to update settings', 500);
   }
 }
+
+

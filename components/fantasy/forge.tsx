@@ -1,20 +1,46 @@
-"use client"
+"use client";
 
-import { RealmCard } from "./realm-card"
-import { getContent } from "@/lib/content-cms"
+import { useEffect, useState } from "react";
+import { RealmCard } from "./realm-card";
+import { getContent, loadContent } from "@/lib/content-cms";
+import type { PortfolioContent } from "@/lib/content-cms";
 
 export function ForgeRealm() {
-  const content = getContent()
-  const forge = content.fantasy.forge
+  const [content, setContent] = useState<PortfolioContent | null>(null);
+
+  useEffect(() => {
+    // Load fresh content from KV on mount
+    loadContent()
+      .then(setContent)
+      .catch(() => {
+        setContent(getContent());
+      });
+  }, []);
+
+  if (!content) {
+    return (
+      <section id="forge" className="py-16 px-6">
+        <div />
+      </section>
+    );
+  }
+
+  const forge = content.fantasy.forge;
 
   return (
     <section id="forge" className="py-16 px-6">
       <div className="max-w-4xl mx-auto">
-        <RealmCard title={forge.title} description={forge.description} content={forge.content} />
+        <RealmCard
+          title={forge.title}
+          description={forge.description}
+          content={forge.content}
+        />
 
         {/* Magical Artifacts (Projects) */}
         <div className="mt-20 space-y-8">
-          <h2 className="text-2xl font-bold text-mystical">Magical Artifacts Created</h2>
+          <h2 className="text-2xl font-bold text-mystical">
+            Magical Artifacts Created
+          </h2>
           <div className="grid md:grid-cols-2 gap-6">
             {content.classic.projects.map((project) => (
               <div
@@ -25,8 +51,12 @@ export function ForgeRealm() {
                   <h3 className="text-lg font-bold text-mystical group-hover:text-glow smooth-transition">
                     {project.title}
                   </h3>
-                  <p className="text-sm text-foreground/70">{project.description}</p>
-                  <p className="text-sm text-muted-foreground">{project.content}</p>
+                  <p className="text-sm text-foreground/70">
+                    {project.description}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {project.content}
+                  </p>
 
                   {/* Rune tags */}
                   <div className="flex flex-wrap gap-2 pt-3">
@@ -46,5 +76,5 @@ export function ForgeRealm() {
         </div>
       </div>
     </section>
-  )
+  );
 }

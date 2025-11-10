@@ -1,9 +1,16 @@
-import { getProjects } from "@/lib/cms";
+import { getProjects } from "@/lib/cms-loader";
 import { AnimatedSection } from "@/components/animated-section";
 import { StaggeredContainer } from "@/components/staggered-container";
 
-export function ClassicProjects() {
-  const projects = getProjects();
+export async function ClassicProjects() {
+  const projects = await getProjects();
+
+  // Filter only featured projects
+  const featuredProjects = projects.filter((p) => p.featured);
+
+  if (!featuredProjects || featuredProjects.length === 0) {
+    return <section>No featured projects available</section>;
+  }
 
   return (
     <section id="projects" className="relative py-20 px-6 overflow-hidden">
@@ -30,29 +37,73 @@ export function ClassicProjects() {
         </AnimatedSection>
 
         <StaggeredContainer staggerDelay={100}>
-          {projects.map((project) => (
+          {featuredProjects.map((project) => (
             <AnimatedSection key={project.id} animation="fade-up">
-              <div className="group relative rounded-2xl overflow-hidden hover:scale-[1.02] smooth-transition cursor-pointer dark:neo-glow ">
+              <div className="group relative rounded-2xl overflow-hidden hover:scale-[1.02] smooth-transition cursor-pointer dark:neo-glow">
                 <div className="absolute inset-0 bg-white/[0.02] backdrop-blur-lg rounded-2xl border border-white/10 group-hover:border-primary/50 group-hover:bg-white/[0.08] smooth-transition dark:border-purple-500/40 dark:group-hover:border-primary/70" />
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/15 to-accent/12 opacity-0 group-hover:opacity-100 smooth-transition rounded-2xl dark:from-primary/25 dark:to-accent/20" />
 
                 <div className="relative z-10 p-8 space-y-4">
-                  <h3 className="text-2xl font-bold text-foreground group-hover:text-primary smooth-transition">
-                    {project.title}
-                  </h3>
+                  <div className="flex items-start justify-between">
+                    <h3 className="text-2xl font-bold text-foreground group-hover:text-primary smooth-transition flex-1">
+                      {project.title}
+                    </h3>
+                    {project.status === "active" && (
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-500/20 text-green-400 border border-green-500/40">
+                        Active
+                      </span>
+                    )}
+                  </div>
+
                   <p className="text-foreground/75 leading-relaxed">
                     {project.description}
                   </p>
 
+                  {project.longDescription && (
+                    <p className="text-sm text-foreground/60 leading-relaxed italic">
+                      {project.longDescription.substring(0, 150)}...
+                    </p>
+                  )}
+
+                  {/* Key Metrics */}
+                  {project.keyMetrics && project.keyMetrics.length > 0 && (
+                    <div className="pt-2 space-y-1">
+                      <p className="text-xs font-semibold text-primary/70 uppercase tracking-wider">
+                        Key Metrics
+                      </p>
+                      <ul className="space-y-1">
+                        {project.keyMetrics.slice(0, 2).map((metric, idx) => (
+                          <li
+                            key={idx}
+                            className="text-sm text-foreground/70 flex items-center gap-2"
+                          >
+                            <span className="w-1 h-1 rounded-full bg-primary/50" />
+                            {metric}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Role and Impact */}
+                  {project.roleAndImpact && (
+                    <p className="text-xs text-primary/60 pt-2">
+                      <span className="font-semibold">Role:</span>{" "}
+                      {project.roleAndImpact}
+                    </p>
+                  )}
+
                   <div className="flex flex-wrap gap-2 pt-4">
-                    {project.stack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-4 py-1.5 rounded-full text-xs font-medium bg-gradient-to-r from-primary/25 to-accent/20 border border-primary/50 text-foreground/85 group-hover:border-primary/70 smooth-transition dark:from-primary/35 dark:to-accent/30 dark:border-primary/60 dark:group-hover:shadow-lg dark:group-hover:shadow-primary/25"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                    {(project.technologies || project.stack || []).map(
+                      (tech) => (
+                        <span
+                          key={tech}
+                          className="px-4 py-1.5 rounded-full text-xs font-medium bg-gradient-to-r from-primary/25 to-accent/20 border border-primary/50 text-foreground/85 group-hover:border-primary/70 smooth-transition dark:from-primary/35 dark:to-accent/30 dark:border-primary/60 dark:group-hover:shadow-lg dark:group-hover:shadow-primary/25"
+                        >
+                          {tech}
+                        </span>
+                      )
+                    )}
                   </div>
                 </div>
               </div>

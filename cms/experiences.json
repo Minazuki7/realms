@@ -1,0 +1,134 @@
+[
+  {
+    "id": "defendr-cto",
+    "company": "Defendr.gg",
+    "position": "Tech Lead / CTO",
+    "startDate": "2022-06-04",
+    "endDate": null,
+    "current": true,
+    "location": "Tunis",
+    "country": "Tunisia",
+    "description": "Led technical strategy and team management for a gaming security platform. Drove architectural decisions, managed developer teams, and optimized system performance.",
+    "achievements": [
+      "Managed development team of 8+ engineers, providing technical guidance and fostering collaboration",
+      "Designed and implemented scalable server architecture supporting high-load gaming infrastructure",
+      "Conducted thorough code reviews and established best practices for codebase quality",
+      "Created and maintained CI/CD pipelines, reducing deployment time by 40%",
+      "Architected microservices infrastructure using NestJS and Docker",
+      "Spearheaded adoption of modern tools and technologies improving team productivity by 30%",
+      "Collaborated with stakeholders on technical roadmap and business alignment"
+    ],
+    "technologies": [
+      "NestJS",
+      "TypeScript",
+      "Node.js",
+      "Docker",
+      "CI/CD",
+      "GraphQL",
+      "MongoDB",
+      "PostgreSQL",
+      "Git",
+      "Microservices"
+    ],
+    "type": "fulltime"
+  },
+  {
+    "id": "wereact-fullstack",
+    "company": "Wereact",
+    "position": "Full-Stack Engineer",
+    "startDate": "2021-06-01",
+    "endDate": "2024-02-28",
+    "current": false,
+    "location": "Tunis",
+    "country": "Tunisia",
+    "description": "Developed and maintained multiple full-stack projects at a consulting agency. Solo-developed BeeFood from conception to production and contributed to various client projects.",
+    "achievements": [
+      "Solely conceived, designed, and developed BeeFood food delivery platform from scratch",
+      "Built backend API using NestJS handling 10k+ daily transactions",
+      "Developed React frontend with real-time updates and mobile app using Flutter",
+      "Designed and trained AI food recommendation system using Python and TensorFlow",
+      "Implemented containerization strategy using Docker, improving deployment consistency",
+      "Refactored Upkrus e-learning platform improving code quality and maintainability by 35%",
+      "Improved Guide Alize medical platform load times by 5% through optimization",
+      "Implemented enterprise-grade authentication and security protocols",
+      "Collaborated with cross-functional teams to deliver features and integrate technologies"
+    ],
+    "technologies": [
+      "NestJS",
+      "React",
+      "Node.js",
+      "MongoDB",
+      "Flutter",
+      "GraphQL",
+      "Docker",
+      "Python",
+      "TensorFlow",
+      "Express.js",
+      "Angular",
+      "TypeScript"
+    ],
+    "type": "fulltime"
+  },
+  {
+    "id": "gomycode-instructor",
+    "company": "GoMyCode",
+    "position": "Coding Instructor",
+    "startDate": "2021-06-01",
+    "endDate": null,
+    "current": true,
+    "location": "Tunis",
+    "country": "Tunisia",
+    "description": "Part-time coding instructor teaching web development fundamentals and advanced concepts to aspiring developers.",
+    "achievements": [
+      "Taught TypeScript, JavaScript, React, and Node.js to 50+ students",
+      "Mentored junior developers in problem-solving and algorithms",
+      "Developed curriculum focusing on modern web development best practices",
+      "Achieved 92% student success rate in course completion"
+    ],
+    "technologies": [
+      "TypeScript",
+      "JavaScript",
+      "React",
+      "Node.js",
+      "Problem Solving",
+      "Algorithms"
+    ],
+    "type": "parttime"
+  },
+  {
+    "id": "3s-intern",
+    "company": "3S",
+    "position": "Software Engineer Intern",
+    "startDate": "2018-05-01",
+    "endDate": "2018-05-31",
+    "current": false,
+    "location": "Boumhal",
+    "country": "Tunisia",
+    "description": "Early career experience building desktop applications and understanding software development fundamentals.",
+    "achievements": [
+      "Developed desktop client management application",
+      "Gained hands-on experience with .NET framework and C# language",
+      "Learned enterprise application architecture and design patterns"
+    ],
+    "technologies": [".NET", "C#", "Desktop Development"],
+    "type": "intern"
+  },
+  {
+    "id": "election-observer",
+    "company": "Election Observer Program",
+    "position": "Short-term Election Observer",
+    "startDate": "2021-05-01",
+    "endDate": "2021-05-31",
+    "current": false,
+    "location": "Boumhal",
+    "country": "Tunisia",
+    "description": "Community service role monitoring local elections to enhance transparency and credibility of electoral process.",
+    "achievements": [
+      "Monitored polling stations ensuring fair electoral process",
+      "Verified voter lists and documented irregularities",
+      "Contributed to transparency and credibility of local elections"
+    ],
+    "technologies": [],
+    "type": "contract"
+  }
+]

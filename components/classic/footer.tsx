@@ -1,8 +1,12 @@
-import { getBio, getSettings } from "@/lib/cms";
+import { getBio, getSettings } from "@/lib/cms-loader";
 
-export function ClassicFooter() {
-  const bio = getBio();
-  const settings = getSettings();
+export async function ClassicFooter() {
+  const bio = await getBio();
+  const settings = await getSettings();
+
+  if (!bio || !settings) {
+    return <footer>Footer data not available</footer>;
+  }
 
   return (
     <footer className="relative py-16 px-6 overflow-hidden border-t border-white/10">

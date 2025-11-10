@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { getContent } from "@/lib/content-cms";
+import { getContent, loadContent } from "@/lib/content-cms";
+import type { PortfolioContent } from "@/lib/content-cms";
 import { useTheme } from "next-themes";
 
 const realms = [
@@ -17,8 +19,16 @@ const realms = [
 export function FantasyNav() {
   const pathname = usePathname();
   const router = useRouter();
-  const content = getContent();
+  const [content, setContent] = useState<PortfolioContent | null>(null);
   const { theme } = useTheme();
+
+  useEffect(() => {
+    loadContent()
+      .then(setContent)
+      .catch(() => {
+        setContent(getContent());
+      });
+  }, []);
 
   const isDark = theme === "dark";
 
@@ -41,7 +51,7 @@ export function FantasyNav() {
               : "0 0 10px rgba(0,217,255,0.5)",
           }}
         >
-          ◆ {content.metadata.name} ◆
+          ◆ {content?.metadata.name || "Traveler"} ◆
         </Link>
 
         {/* Navigation */}

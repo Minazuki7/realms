@@ -49,7 +49,9 @@ export function ModeSelector() {
         </div>
 
         <div className="mt-6 opacity-0 group-hover:opacity-100 smooth-transition">
-          <Button className="w-full">Enter The Classic</Button>
+          <Button asChild className="w-full">
+            Enter The Classic
+          </Button>
         </div>
 
         <div className="absolute bottom-4 right-4 text-xs text-muted-foreground/50 group-hover:text-muted-foreground/70 smooth-transition">
@@ -78,7 +80,10 @@ export function ModeSelector() {
         </div>
 
         <div className="mt-6 opacity-0 group-hover:opacity-100 smooth-transition">
-          <Button className="w-full bg-mystical hover:bg-arcane text-primary-foreground">
+          <Button
+            asChild
+            className="w-full bg-mystical hover:bg-arcane text-primary-foreground"
+          >
             Enter The Fantasy
           </Button>
         </div>

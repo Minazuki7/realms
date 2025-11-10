@@ -4,7 +4,7 @@
  */
 
 import { NextRequest } from 'next/server';
-import { updateProject, deleteProject } from '@/lib/kv-cms';
+import { getKVValue, setKVValue } from '@/lib/kv-direct-api';
 import { verifyApiKey, createErrorResponse, createSuccessResponse } from '@/lib/auth';
 
 interface RouteParams {
@@ -24,13 +24,25 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     const { id } = await params;
     const updates = await request.json();
 
-    const result = await updateProject(id, updates);
+    // Get existing projects
+    const projectsValue = await getKVValue('cms:projects');
+    const projects = projectsValue ? JSON.parse(projectsValue) : [];
     
-    if (!result) {
+    // Find and update project
+    const projectIndex = projects.findIndex((p: any) => p.id === id);
+    if (projectIndex === -1) {
       return createErrorResponse('Project not found', 404);
     }
 
-    return createSuccessResponse(result);
+    projects[projectIndex] = { ...projects[projectIndex], ...updates };
+    
+    // Save to KV
+    const success = await setKVValue('cms:projects', JSON.stringify(projects));
+    if (!success) {
+      throw new Error('Failed to save projects to KV');
+    }
+
+    return createSuccessResponse(projects[projectIndex]);
   } catch (error) {
     console.error('Error updating project:', error);
     return createErrorResponse('Failed to update project', 500);
@@ -46,15 +58,31 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     }
 
     const { id } = await params;
-    const deleted = await deleteProject(id);
 
-    if (!deleted) {
+    // Get existing projects
+    const projectsValue = await getKVValue('cms:projects');
+    const projects = projectsValue ? JSON.parse(projectsValue) : [];
+    
+    // Find and remove project
+    const projectIndex = projects.findIndex((p: any) => p.id === id);
+    if (projectIndex === -1) {
       return createErrorResponse('Project not found', 404);
     }
 
-    return createSuccessResponse({ success: true, id });
+    const deleted = projects[projectIndex];
+    projects.splice(projectIndex, 1);
+    
+    // Save to KV
+    const success = await setKVValue('cms:projects', JSON.stringify(projects));
+    if (!success) {
+      throw new Error('Failed to save projects to KV');
+    }
+
+    return createSuccessResponse({ success: true, id, deleted });
   } catch (error) {
     console.error('Error deleting project:', error);
     return createErrorResponse('Failed to delete project', 500);
   }
 }
+
+

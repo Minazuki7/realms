@@ -1,37 +1,63 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState } from "react"
-import { getContent } from "@/lib/content-cms"
+import type React from "react";
+import { useEffect, useState } from "react";
+import { getContent, loadContent } from "@/lib/content-cms";
+import type { PortfolioContent } from "@/lib/content-cms";
 
 export function ContactForm() {
-  const content = getContent()
+  const [content, setContent] = useState<PortfolioContent | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
-  })
+  });
+
+  useEffect(() => {
+    loadContent()
+      .then(setContent)
+      .catch(() => {
+        setContent(getContent());
+      });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-  }
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
+    });
+  };
+
+  if (!content) {
+    return (
+      <form className="space-y-6">
+        <div />
+      </form>
+    );
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {[
         { label: "Name", name: "name", type: "text", placeholder: "Your name" },
-        { label: "Email", name: "email", type: "email", placeholder: "your@email.com" },
+        {
+          label: "Email",
+          name: "email",
+          type: "email",
+          placeholder: "your@email.com",
+        },
       ].map((field) => (
         <div key={field.name}>
-          <label className="block text-sm font-semibold text-foreground/80 mb-2">{field.label}</label>
+          <label className="block text-sm font-semibold text-foreground/80 mb-2">
+            {field.label}
+          </label>
           <input
             type={field.type}
             name={field.name}
@@ -44,7 +70,9 @@ export function ContactForm() {
       ))}
 
       <div>
-        <label className="block text-sm font-semibold text-foreground/80 mb-2">Message</label>
+        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+          Message
+        </label>
         <textarea
           name="message"
           value={formData.message}
@@ -66,5 +94,5 @@ export function ContactForm() {
         </span>
       </button>
     </form>
-  )
+  );
 }

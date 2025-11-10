@@ -15,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { Bio, Project, Settings } from "@/lib/kv-cms";
+import type { Bio, Project, Settings } from "@/lib/kv-types";
 import { useRouter } from "next/navigation";
 
 interface AdminDashboardProps {
@@ -461,7 +461,7 @@ export function AdminDashboard({ apiKey }: AdminDashboardProps) {
                           </Button>
                         </div>
                         <div className="flex gap-2 flex-wrap">
-                          {project.stack.map((tech) => (
+                          {project.stack?.map((tech) => (
                             <Badge key={tech} variant="outline">
                               {tech}
                             </Badge>

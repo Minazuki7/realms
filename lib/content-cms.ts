@@ -127,7 +127,149 @@ export const defaultContent: PortfolioContent = {
   },
 }
 
-// Load content - can be extended to load from database or file
+// Load content - fetches from KV via API, falls back to default
+let cachedContent: PortfolioContent | null = null;
+let isLoading = false;
+let loadPromise: Promise<PortfolioContent> | null = null;
+
+async function fetchContentFromKV(): Promise<PortfolioContent> {
+  try {
+    const bioRes = await fetch("/api/cms/bio");
+    const projectsRes = await fetch("/api/cms/projects");
+    const settingsRes = await fetch("/api/cms/settings");
+
+    if (!bioRes.ok || !projectsRes.ok || !settingsRes.ok) {
+      return defaultContent;
+    }
+
+    const bio = await bioRes.json();
+    const projects = await projectsRes.json();
+    const settings = await settingsRes.json();
+
+    // Transform KV data to content structure
+    return {
+      metadata: {
+        name: bio.name || defaultContent.metadata.name,
+        title: bio.title || defaultContent.metadata.title,
+        email: bio.email || defaultContent.metadata.email,
+        social: bio.socials || defaultContent.metadata.social,
+      },
+      classic: {
+        hero: {
+          id: "classic-hero",
+          title: "Welcome",
+          description: bio.title || defaultContent.classic.hero.description,
+          heroText: bio.headline || defaultContent.classic.hero.heroText,
+          content: bio.bio || defaultContent.classic.hero.content,
+          tags: ["developer", "designer", "creative"],
+        },
+        about: {
+          id: "classic-about",
+          title: "About Me",
+          description: "My professional journey",
+          content: bio.bio || defaultContent.classic.about.content,
+          tags: ["professional", "experienced"],
+        },
+        projects: Array.isArray(projects)
+          ? projects.map((p, i) => ({
+              id: `project-${i}`,
+              title: p.title || "",
+              description: p.description || "",
+              content: p.description || "",
+              tags: p.tags || ["project"],
+            }))
+          : defaultContent.classic.projects,
+        skills: {
+          id: "classic-skills",
+          title: "Technical Skills",
+          description: "Technologies and expertise",
+          content: bio.skills
+            ? Object.values(bio.skills)
+                .flat()
+                .join(", ")
+            : defaultContent.classic.skills.content,
+          tags: ["technical"],
+        },
+        contact: {
+          id: "classic-contact",
+          title: "Get In Touch",
+          description: "Let's collaborate",
+          content: "Have a project in mind? I'd love to hear from you.",
+          tags: ["contact"],
+        },
+      },
+      fantasy: {
+        origin: {
+          id: "fantasy-origin",
+          title: "The Origin",
+          description: "Where the journey began",
+          heroText: "A traveler awakens between two worlds",
+          content: bio.bio || defaultContent.fantasy.origin.content,
+          tags: ["origin", "lore"],
+        },
+        forge: {
+          id: "fantasy-forge",
+          title: "The Forge",
+          description: "Where creation manifests",
+          content:
+            projects.length > 0
+              ? `At the Forge, ${projects.length} magical artifacts have been created. ${projects.map((p: any) => p.title).join(", ")}.`
+              : defaultContent.fantasy.forge.content,
+          tags: ["projects", "creation"],
+        },
+        codex: {
+          id: "fantasy-codex",
+          title: "The Codex",
+          description: "Ancient knowledge and arcane arts",
+          content: bio.skills
+            ? `Within the Codex lie the ancient runes: ${Object.values(bio.skills)
+                .flat()
+                .join(", ")}. Mastery of these arts unlocks infinite possibilities.`
+            : defaultContent.fantasy.codex.content,
+          tags: ["skills", "knowledge"],
+        },
+        bridge: {
+          id: "fantasy-bridge",
+          title: "The Bridge",
+          description: "A connection between worlds",
+          content: `Send a message to ${bio.email || "the traveler"}, and let conversation bloom.`,
+          tags: ["contact", "bridge"],
+        },
+      },
+    };
+  } catch (error) {
+    console.error("Failed to fetch content from KV:", error);
+    return defaultContent;
+  }
+}
+
 export function getContent(): PortfolioContent {
-  return defaultContent
+  // If running on client and cache is available, return it
+  if (cachedContent) {
+    return cachedContent;
+  }
+  
+  // Return default content immediately; async loading happens in background
+  return defaultContent;
+}
+
+// Load content asynchronously (called on mount in client components)
+export async function loadContent(): Promise<PortfolioContent> {
+  if (cachedContent) {
+    return cachedContent;
+  }
+
+  if (loadPromise) {
+    return loadPromise;
+  }
+
+  isLoading = true;
+  loadPromise = fetchContentFromKV().then((content) => {
+    cachedContent = content;
+    isLoading = false;
+    loadPromise = null;
+    return content;
+  });
+
+  return loadPromise;
 }

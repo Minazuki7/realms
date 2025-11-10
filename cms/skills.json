@@ -1,0 +1,234 @@
+[
+  {
+    "id": "typescript",
+    "name": "TypeScript",
+    "category": "language",
+    "proficiency": "expert",
+    "yearsOfExperience": 4,
+    "endorsements": 45
+  },
+  {
+    "id": "javascript",
+    "name": "JavaScript",
+    "category": "language",
+    "proficiency": "expert",
+    "yearsOfExperience": 4,
+    "endorsements": 42
+  },
+  {
+    "id": "nodejs",
+    "name": "Node.js",
+    "category": "framework",
+    "proficiency": "expert",
+    "yearsOfExperience": 4,
+    "endorsements": 40
+  },
+  {
+    "id": "react",
+    "name": "React",
+    "category": "framework",
+    "proficiency": "expert",
+    "yearsOfExperience": 4,
+    "endorsements": 38
+  },
+  {
+    "id": "nestjs",
+    "name": "NestJS",
+    "category": "framework",
+    "proficiency": "expert",
+    "yearsOfExperience": 3,
+    "endorsements": 35
+  },
+  {
+    "id": "graphql",
+    "name": "GraphQL",
+    "category": "framework",
+    "proficiency": "advanced",
+    "yearsOfExperience": 3,
+    "endorsements": 28
+  },
+  {
+    "id": "mongodb",
+    "name": "MongoDB",
+    "category": "database",
+    "proficiency": "advanced",
+    "yearsOfExperience": 3,
+    "endorsements": 32
+  },
+  {
+    "id": "postgresql",
+    "name": "PostgreSQL",
+    "category": "database",
+    "proficiency": "advanced",
+    "yearsOfExperience": 2,
+    "endorsements": 20
+  },
+  {
+    "id": "docker",
+    "name": "Docker",
+    "category": "devops",
+    "proficiency": "advanced",
+    "yearsOfExperience": 2,
+    "endorsements": 25
+  },
+  {
+    "id": "cicd",
+    "name": "CI/CD Pipelines",
+    "category": "devops",
+    "proficiency": "advanced",
+    "yearsOfExperience": 2,
+    "endorsements": 22
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "category": "tool",
+    "proficiency": "expert",
+    "yearsOfExperience": 4,
+    "endorsements": 40
+  },
+  {
+    "id": "nextjs",
+    "name": "Next.js",
+    "category": "framework",
+    "proficiency": "advanced",
+    "yearsOfExperience": 2,
+    "endorsements": 24
+  },
+  {
+    "id": "expressjs",
+    "name": "Express.js",
+    "category": "framework",
+    "proficiency": "advanced",
+    "yearsOfExperience": 3,
+    "endorsements": 28
+  },
+  {
+    "id": "angular",
+    "name": "Angular",
+    "category": "framework",
+    "proficiency": "advanced",
+    "yearsOfExperience": 2,
+    "endorsements": 18
+  },
+  {
+    "id": "tailwindcss",
+    "name": "Tailwind CSS",
+    "category": "framework",
+    "proficiency": "advanced",
+    "yearsOfExperience": 2,
+    "endorsements": 20
+  },
+  {
+    "id": "python",
+    "name": "Python",
+    "category": "language",
+    "proficiency": "intermediate",
+    "yearsOfExperience": 2,
+    "endorsements": 15
+  },
+  {
+    "id": "tensorflow",
+    "name": "TensorFlow",
+    "category": "framework",
+    "proficiency": "intermediate",
+    "yearsOfExperience": 1,
+    "endorsements": 12
+  },
+  {
+    "id": "reactnative",
+    "name": "React Native",
+    "category": "framework",
+    "proficiency": "intermediate",
+    "yearsOfExperience": 1,
+    "endorsements": 10
+  },
+  {
+    "id": "flutter",
+    "name": "Flutter",
+    "category": "framework",
+    "proficiency": "intermediate",
+    "yearsOfExperience": 1,
+    "endorsements": 8
+  },
+  {
+    "id": "csharp",
+    "name": "C#",
+    "category": "language",
+    "proficiency": "intermediate",
+    "yearsOfExperience": 0.5,
+    "endorsements": 5
+  },
+  {
+    "id": "dotnet",
+    "name": ".NET",
+    "category": "framework",
+    "proficiency": "intermediate",
+    "yearsOfExperience": 0.5,
+    "endorsements": 5
+  },
+  {
+    "id": "mysql",
+    "name": "MySQL",
+    "category": "database",
+    "proficiency": "intermediate",
+    "yearsOfExperience": 1,
+    "endorsements": 8
+  },
+  {
+    "id": "jest",
+    "name": "Jest",
+    "category": "tool",
+    "proficiency": "intermediate",
+    "yearsOfExperience": 1,
+    "endorsements": 10
+  },
+  {
+    "id": "postman",
+    "name": "Postman",
+    "category": "tool",
+    "proficiency": "advanced",
+    "yearsOfExperience": 3,
+    "endorsements": 20
+  },
+  {
+    "id": "figma",
+    "name": "Figma",
+    "category": "tool",
+    "proficiency": "intermediate",
+    "yearsOfExperience": 2,
+    "endorsements": 12
+  },
+  {
+    "id": "microservices",
+    "name": "Microservices Architecture",
+    "category": "methodology",
+    "proficiency": "advanced",
+    "yearsOfExperience": 2,
+    "endorsements": 18
+  },
+  {
+    "id": "agile",
+    "name": "Agile Development",
+    "category": "methodology",
+    "proficiency": "advanced",
+    "yearsOfExperience": 3,
+    "endorsements": 22
+  },
+  {
+    "id": "codereview",
+    "name": "Code Review & QA",
+    "category": "methodology",
+    "proficiency": "expert",
+    "yearsOfExperience": 3,
+    "endorsements": 25
+  },
+  {
+    "id": "mentoringtech",
+    "name": "Technical Mentoring",
+    "category": "methodology",
+    "proficiency": "advanced",
+    "yearsOfExperience": 2,
+    "endorsements": 20
+  }
+]

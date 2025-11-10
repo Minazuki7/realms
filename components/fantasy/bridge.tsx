@@ -1,31 +1,52 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
+import { useEffect, useState } from "react";
 
-import { RealmCard } from "./realm-card"
-import { getContent } from "@/lib/content-cms"
-import { useState } from "react"
+import { RealmCard } from "./realm-card";
+import { getContent, loadContent } from "@/lib/content-cms";
+import type { PortfolioContent } from "@/lib/content-cms";
 
 export function BridgeRealm() {
-  const content = getContent()
-  const bridge = content.fantasy.bridge
+  const [content, setContent] = useState<PortfolioContent | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
-  })
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Message sent across the veil:", formData)
+  useEffect(() => {
+    // Load fresh content from KV on mount
+    loadContent()
+      .then(setContent)
+      .catch(() => {
+        setContent(getContent());
+      });
+  }, []);
+
+  if (!content) {
+    return (
+      <section id="bridge" className="py-16 px-6">
+        <div />
+      </section>
+    );
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const bridge = content.fantasy.bridge;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Message sent across the veil:", formData);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   return (
     <section id="bridge" className="py-16 px-6">
@@ -39,13 +60,17 @@ export function BridgeRealm() {
 
         {/* Contact Ritual */}
         <div className="mt-20 space-y-8">
-          <h2 className="text-2xl font-bold text-mystical">Send a Message Across the Veil</h2>
+          <h2 className="text-2xl font-bold text-mystical">
+            Send a Message Across the Veil
+          </h2>
 
           <div className="grid md:grid-cols-2 gap-12">
             {/* Mystical Form */}
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-mystical mb-2">Your Name</label>
+                <label className="block text-sm font-medium text-mystical mb-2">
+                  Your Name
+                </label>
                 <input
                   type="text"
                   name="name"
@@ -57,7 +82,9 @@ export function BridgeRealm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-mystical mb-2">Mystical Seal (Email)</label>
+                <label className="block text-sm font-medium text-mystical mb-2">
+                  Mystical Seal (Email)
+                </label>
                 <input
                   type="email"
                   name="email"
@@ -69,7 +96,9 @@ export function BridgeRealm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-mystical mb-2">Your Incantation</label>
+                <label className="block text-sm font-medium text-mystical mb-2">
+                  Your Incantation
+                </label>
                 <textarea
                   name="message"
                   value={formData.message}
@@ -101,25 +130,30 @@ export function BridgeRealm() {
               </div>
 
               <div>
-                <h3 className="font-bold text-mystical mb-4">Ethereal Pathways</h3>
+                <h3 className="font-bold text-mystical mb-4">
+                  Ethereal Pathways
+                </h3>
                 <div className="space-y-3">
-                  {Object.entries(content.metadata.social).map(([platform, url]) => (
-                    <a
-                      key={platform}
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-mystical hover:text-glow smooth-transition block capitalize hover:pl-2 smooth-transition"
-                    >
-                      → {platform}
-                    </a>
-                  ))}
+                  {Object.entries(content.metadata.social).map(
+                    ([platform, url]) => (
+                      <a
+                        key={platform}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-mystical hover:text-glow smooth-transition block capitalize hover:pl-2 smooth-transition"
+                      >
+                        → {platform}
+                      </a>
+                    )
+                  )}
                 </div>
               </div>
 
               <div className="p-4 rounded-lg bg-mystical/10 border border-mystical/30">
                 <p className="text-sm text-muted-foreground">
-                  The magic of connection transcends dimensions. Your message will be received.
+                  The magic of connection transcends dimensions. Your message
+                  will be received.
                 </p>
               </div>
             </div>
@@ -127,5 +161,5 @@ export function BridgeRealm() {
         </div>
       </div>
     </section>
-  )
+  );
 }
