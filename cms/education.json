@@ -1,7 +1,7 @@
 [
   {
     "id": "esprit-engineering",
-    "institution": "The Private Higher School of Engineering and Technology (ESPRIT)",
+    "school": "The Private Higher School of Engineering and Technology (ESPRIT)",
     "degree": "National Engineering Degree",
     "field": "Software Engineering",
     "startDate": "2019-09-01",
@@ -15,7 +15,7 @@
   },
   {
     "id": "ipeit-preengineering",
-    "institution": "Institut Préparatoire aux Études d'Ingénieurs de Tunis (IPEIT)",
+    "school": "Institut Préparatoire aux Études d'Ingénieurs de Tunis (IPEIT)",
     "degree": "Pre-engineering Degree",
     "field": "Mathematics & Physics",
     "startDate": "2016-08-01",

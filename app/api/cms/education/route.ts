@@ -31,8 +31,8 @@ export async function POST(request: NextRequest) {
     const edu = await request.json();
     
     // Validate education entry
-    if (!edu.id || !edu.institution) {
-      return createErrorResponse('Missing required fields: id, institution', 400);
+    if (!edu.id || !edu.school) {
+      return createErrorResponse('Missing required fields: id, school', 400);
     }
 
     // Get existing education entries
