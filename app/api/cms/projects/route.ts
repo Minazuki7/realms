@@ -22,16 +22,47 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check for clear action FIRST (before parsing body)
+    const url = new URL(request.url);
+    const action = url.searchParams.get('action');
+    
+    console.log('[PROJECTS API] POST received, action:', action);
+    
+    if (action === 'clear') {
+      console.log('[PROJECTS API] Processing clear action');
+      try {
+        // Verify authentication
+        const auth = await verifyApiKey();
+        if (!auth.authenticated) {
+          return createErrorResponse(auth.error || 'Unauthorized', 401);
+        }
+
+        // Clear all projects
+        await setKVValue('cms:projects', JSON.stringify([]));
+        console.log('[PROJECTS API] All projects cleared successfully');
+        return createSuccessResponse({ message: 'All projects cleared' });
+      } catch (clearError) {
+        console.error('[PROJECTS API] Error clearing projects:', clearError);
+        return createErrorResponse('Failed to clear projects', 500);
+      }
+    }
+    
     // Verify authentication
     const auth = await verifyApiKey();
     if (!auth.authenticated) {
       return createErrorResponse(auth.error || 'Unauthorized', 401);
     }
 
-    const project = await request.json();
+    let project;
+    try {
+      project = await request.json();
+    } catch (parseError) {
+      console.error('[PROJECTS API] Error parsing JSON:', parseError);
+      return createErrorResponse('Invalid or missing request body', 400);
+    }
     
     // Validate project
-    if (!project.id || !project.title) {
+    if (!project || !project.id || !project.title) {
       return createErrorResponse('Missing required fields: id, title', 400);
     }
 

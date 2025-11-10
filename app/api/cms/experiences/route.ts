@@ -22,16 +22,44 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check for clear action FIRST (before parsing body)
+    const url = new URL(request.url);
+    const action = url.searchParams.get('action');
+    
+    if (action === 'clear') {
+      try {
+        // Verify authentication
+        const auth = await verifyApiKey();
+        if (!auth.authenticated) {
+          return createErrorResponse(auth.error || 'Unauthorized', 401);
+        }
+
+        // Clear all experiences
+        await setKVValue('cms:experiences', JSON.stringify([]));
+        console.log('[EXPERIENCES API] All experiences cleared successfully');
+        return createSuccessResponse({ message: 'All experiences cleared' });
+      } catch (clearError) {
+        console.error('[EXPERIENCES API] Error clearing experiences:', clearError);
+        return createErrorResponse('Failed to clear experiences', 500);
+      }
+    }
+    
     // Verify authentication
     const auth = await verifyApiKey();
     if (!auth.authenticated) {
       return createErrorResponse(auth.error || 'Unauthorized', 401);
     }
 
-    const experience = await request.json();
+    let experience;
+    try {
+      experience = await request.json();
+    } catch (parseError) {
+      console.error('[EXPERIENCES API] Error parsing JSON:', parseError);
+      return createErrorResponse('Invalid or missing request body', 400);
+    }
     
     // Validate experience
-    if (!experience.id || !experience.company) {
+    if (!experience || !experience.id || !experience.company) {
       return createErrorResponse('Missing required fields: id, company', 400);
     }
 

@@ -39,6 +39,32 @@ async function upload(endpoint: string, apiKey: string, data: any) {
   console.log(`✓ Uploaded to ${endpoint}`);
 }
 
+async function clearEndpoint(endpoint: string, apiKey: string) {
+  try {
+    // Use POST with action: 'clear' parameter and no body
+    const url = `${SITE_URL}${endpoint}?action=clear`;
+    console.log(`  Clearing ${endpoint}...`);
+    
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+      },
+    });
+    
+    const statusOk = res.status >= 200 && res.status < 300;
+    const responseText = await res.text();
+    
+    if (!statusOk) {
+      throw new Error(`HTTP ${res.status}: ${responseText || 'No error message'}`);
+    }
+    
+    console.log(`✓ Cleared ${endpoint}`);
+  } catch (error) {
+    throw new Error(`Failed to clear ${endpoint}: ${error instanceof Error ? error.message : String(error)}`);
+  }
+}
+
 async function main() {
   console.log('🚀 Starting CMS migration to Cloudflare KV...\n');
   
@@ -56,6 +82,16 @@ async function main() {
   console.log('🔐 Authenticating with admin API...');
   const apiKey = await getApiKey();
   console.log('✓ Authentication successful\n');
+
+  // Clear existing data (TODO: uncomment after deploying API changes with clear support)
+  // console.log('🧹 Clearing existing CMS data...');
+  // await clearEndpoint('/api/cms/bio', apiKey);
+  // await clearEndpoint('/api/cms/projects', apiKey);
+  // await clearEndpoint('/api/cms/experiences', apiKey);
+  // await clearEndpoint('/api/cms/education', apiKey);
+  // await clearEndpoint('/api/cms/skills', apiKey);
+  // await clearEndpoint('/api/cms/settings', apiKey);
+  // console.log('✓ All CMS data cleared\n');
 
   // Upload Bio
   console.log('📝 Uploading bio...');

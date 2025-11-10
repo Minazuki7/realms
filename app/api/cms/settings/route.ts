@@ -26,13 +26,41 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check for clear action FIRST (before parsing body)
+    const url = new URL(request.url);
+    const action = url.searchParams.get('action');
+    
+    if (action === 'clear') {
+      try {
+        // Verify authentication
+        const auth = await verifyApiKey();
+        if (!auth.authenticated) {
+          return createErrorResponse(auth.error || 'Unauthorized', 401);
+        }
+
+        // Clear settings
+        await setKVValue('cms:settings', '');
+        console.log('[SETTINGS API] Settings cleared successfully');
+        return createSuccessResponse({ message: 'Settings cleared' });
+      } catch (clearError) {
+        console.error('[SETTINGS API] Error clearing settings:', clearError);
+        return createErrorResponse('Failed to clear settings', 500);
+      }
+    }
+    
     // Verify authentication
     const auth = await verifyApiKey();
     if (!auth.authenticated) {
       return createErrorResponse(auth.error || 'Unauthorized', 401);
     }
 
-    const body = await request.json();
+    let body;
+    try {
+      body = await request.json();
+    } catch (parseError) {
+      console.error('[SETTINGS API] Error parsing JSON:', parseError);
+      return createErrorResponse('Invalid or missing request body', 400);
+    }
     
     // Validate body
     if (!body || typeof body !== 'object') {
@@ -52,5 +80,4 @@ export async function POST(request: NextRequest) {
     return createErrorResponse('Failed to update settings', 500);
   }
 }
-
 

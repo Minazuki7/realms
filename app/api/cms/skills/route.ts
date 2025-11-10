@@ -22,16 +22,44 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check for clear action FIRST (before parsing body)
+    const url = new URL(request.url);
+    const action = url.searchParams.get('action');
+    
+    if (action === 'clear') {
+      try {
+        // Verify authentication
+        const auth = await verifyApiKey();
+        if (!auth.authenticated) {
+          return createErrorResponse(auth.error || 'Unauthorized', 401);
+        }
+
+        // Clear all skills
+        await setKVValue('cms:skills', JSON.stringify([]));
+        console.log('[SKILLS API] All skills cleared successfully');
+        return createSuccessResponse({ message: 'All skills cleared' });
+      } catch (clearError) {
+        console.error('[SKILLS API] Error clearing skills:', clearError);
+        return createErrorResponse('Failed to clear skills', 500);
+      }
+    }
+    
     // Verify authentication
     const auth = await verifyApiKey();
     if (!auth.authenticated) {
       return createErrorResponse(auth.error || 'Unauthorized', 401);
     }
 
-    const skill = await request.json();
+    let skill;
+    try {
+      skill = await request.json();
+    } catch (parseError) {
+      console.error('[SKILLS API] Error parsing JSON:', parseError);
+      return createErrorResponse('Invalid or missing request body', 400);
+    }
     
     // Validate skill
-    if (!skill.id || !skill.name) {
+    if (!skill || !skill.id || !skill.name) {
       return createErrorResponse('Missing required fields: id, name', 400);
     }
 

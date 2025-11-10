@@ -1,6 +1,7 @@
 /**
  * GET /api/cms/bio - Get bio data
  * POST /api/cms/bio - Update bio data (requires auth)
+ * DELETE /api/cms/bio - Clear bio data (requires auth)
  */
 
 import { NextRequest } from 'next/server';
@@ -26,6 +27,39 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check for clear action FIRST (before parsing body)
+    const url = new URL(request.url);
+    const action = url.searchParams.get('action');
+    
+    console.log('[BIO API] POST received, action:', action);
+    
+    if (action === 'clear') {
+      console.log('[BIO API] Processing clear action');
+      try {
+        // Verify authentication
+        const auth = await verifyApiKey();
+        console.log('[BIO API] Clear auth:', auth.authenticated);
+        if (!auth.authenticated) {
+          return createErrorResponse(auth.error || 'Unauthorized', 401);
+        }
+
+        // Clear bio
+        console.log('[BIO API] Calling setKVValue to clear bio');
+        const success = await setKVValue('cms:bio', '');
+        console.log('[BIO API] setKVValue result:', success);
+        
+        if (!success) {
+          return createErrorResponse('Failed to clear bio to KV', 500);
+        }
+        
+        console.log('[BIO API] Bio cleared successfully');
+        return createSuccessResponse({ message: 'Bio cleared' });
+      } catch (clearError) {
+        console.error('[BIO API] Error clearing bio:', clearError);
+        return createErrorResponse('Failed to clear bio', 500);
+      }
+    }
+    
     console.log('[BIO API] POST request received');
     
     // Verify authentication
@@ -36,7 +70,14 @@ export async function POST(request: NextRequest) {
       return createErrorResponse(auth.error || 'Unauthorized', 401);
     }
 
-    const body = await request.json();
+    let body;
+    try {
+      body = await request.json();
+    } catch (parseError) {
+      console.error('[BIO API] Error parsing JSON:', parseError);
+      return createErrorResponse('Invalid or missing request body', 400);
+    }
+    
     console.log('[BIO API] Request body received:', !!body);
     
     // Validate body

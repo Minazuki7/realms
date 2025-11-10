@@ -22,16 +22,44 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check for clear action FIRST (before parsing body)
+    const url = new URL(request.url);
+    const action = url.searchParams.get('action');
+    
+    if (action === 'clear') {
+      try {
+        // Verify authentication
+        const auth = await verifyApiKey();
+        if (!auth.authenticated) {
+          return createErrorResponse(auth.error || 'Unauthorized', 401);
+        }
+
+        // Clear all education entries
+        await setKVValue('cms:education', JSON.stringify([]));
+        console.log('[EDUCATION API] All education entries cleared successfully');
+        return createSuccessResponse({ message: 'All education entries cleared' });
+      } catch (clearError) {
+        console.error('[EDUCATION API] Error clearing education:', clearError);
+        return createErrorResponse('Failed to clear education', 500);
+      }
+    }
+    
     // Verify authentication
     const auth = await verifyApiKey();
     if (!auth.authenticated) {
       return createErrorResponse(auth.error || 'Unauthorized', 401);
     }
 
-    const edu = await request.json();
+    let edu;
+    try {
+      edu = await request.json();
+    } catch (parseError) {
+      console.error('[EDUCATION API] Error parsing JSON:', parseError);
+      return createErrorResponse('Invalid or missing request body', 400);
+    }
     
     // Validate education entry
-    if (!edu.id || !edu.school) {
+    if (!edu || !edu.id || !edu.school) {
       return createErrorResponse('Missing required fields: id, school', 400);
     }
 
