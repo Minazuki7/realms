@@ -2,8 +2,6 @@ import { ClassicNav } from "@/components/classic/nav";
 import { ClassicProjects } from "@/components/classic/projects";
 import { ClassicFooter } from "@/components/classic/footer";
 
-export const runtime = "edge";
-
 export default function ProjectsPage() {
   return (
     <>

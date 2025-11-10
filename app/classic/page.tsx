@@ -6,8 +6,6 @@ import { ClassicSkills } from "@/components/classic/skills";
 import { ClassicContact } from "@/components/classic/contact";
 import { ClassicFooter } from "@/components/classic/footer";
 
-export const runtime = "edge";
-
 export default function ClassicPage() {
   return (
     <>
