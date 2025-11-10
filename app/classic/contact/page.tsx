@@ -2,6 +2,8 @@ import { ClassicNav } from "@/components/classic/nav";
 import { ClassicContact } from "@/components/classic/contact";
 import { ClassicFooter } from "@/components/classic/footer";
 
+export const runtime = "edge";
+
 export default function ContactPage() {
   return (
     <>

@@ -2,6 +2,8 @@ import { ClassicNav } from "@/components/classic/nav";
 import { ClassicSkills } from "@/components/classic/skills";
 import { ClassicFooter } from "@/components/classic/footer";
 
+export const runtime = "edge";
+
 export default function SkillsPage() {
   return (
     <>
