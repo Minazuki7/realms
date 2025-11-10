@@ -18,7 +18,10 @@ async function getApiKey() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ password: ADMIN_PASSWORD }),
   });
-  if (!res.ok) throw new Error('Failed to authenticate');
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Failed to authenticate: ${err}`);
+  }
   const { apiKey } = await res.json();
   return apiKey;
 }
@@ -39,30 +42,19 @@ async function upload(endpoint: string, apiKey: string, data: any) {
   console.log(`✓ Uploaded to ${endpoint}`);
 }
 
-async function clearEndpoint(endpoint: string, apiKey: string) {
-  try {
-    // Use POST with action: 'clear' parameter and no body
-    const url = `${SITE_URL}${endpoint}?action=clear`;
-    console.log(`  Clearing ${endpoint}...`);
-    
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-      },
-    });
-    
-    const statusOk = res.status >= 200 && res.status < 300;
-    const responseText = await res.text();
-    
-    if (!statusOk) {
-      throw new Error(`HTTP ${res.status}: ${responseText || 'No error message'}`);
-    }
-    
-    console.log(`✓ Cleared ${endpoint}`);
-  } catch (error) {
-    throw new Error(`Failed to clear ${endpoint}: ${error instanceof Error ? error.message : String(error)}`);
+async function clearKVData(apiKey: string) {
+  const res = await fetch(`${SITE_URL}/api/cms/clear`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`Failed to clear CMS data: ${err}`);
   }
+  console.log(`✓ All CMS data cleared\n`);
 }
 
 async function main() {
@@ -83,18 +75,11 @@ async function main() {
   const apiKey = await getApiKey();
   console.log('✓ Authentication successful\n');
 
-  // Clear existing data (TODO: uncomment after deploying API changes with clear support)
-  // console.log('🧹 Clearing existing CMS data...');
-  // await clearEndpoint('/api/cms/bio', apiKey);
-  // await clearEndpoint('/api/cms/projects', apiKey);
-  // await clearEndpoint('/api/cms/experiences', apiKey);
-  // await clearEndpoint('/api/cms/education', apiKey);
-  // await clearEndpoint('/api/cms/skills', apiKey);
-  // await clearEndpoint('/api/cms/settings', apiKey);
-  // console.log('✓ All CMS data cleared\n');
+  // Clear existing data
+  console.log('🧹 Clearing existing CMS data...');
+  await clearKVData(apiKey);
 
   // Upload Bio
-  console.log('📝 Uploading bio...');
   await upload('/api/cms/bio', apiKey, bio);
   console.log('✓ Bio uploaded\n');
 
