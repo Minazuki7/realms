@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import "@/styles/secret-love.css";
 
 // Realistic Butterfly component with detailed CSS
@@ -215,6 +216,7 @@ const FloatingPhoto = ({
   startDelay: number;
   xPosition: number;
 }) => {
+  const [imageError, setImageError] = useState(false);
   const rotations = [-12, 8, -5, 15, -8, 10, -15, 5];
   const rotate = rotations[index % rotations.length];
   const durations = [18, 22, 16, 20, 24, 19, 21, 17];
@@ -233,11 +235,15 @@ const FloatingPhoto = ({
         className="photo-frame bg-white/90 p-2 rounded-lg shadow-2xl"
         style={{ transform: `rotate(${rotate}deg)` }}
       >
-        {imageSrc ? (
-          <img
+        {imageSrc && !imageError ? (
+          <Image
             src={imageSrc}
-            alt={`Memory ${index + 1}`}
+            alt={`Our memory ${index + 1}`}
+            width={128}
+            height={128}
             className="w-24 h-24 sm:w-32 sm:h-32 rounded-md object-cover"
+            onError={() => setImageError(true)}
+            unoptimized
           />
         ) : (
           <div className="w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-pink-200 via-rose-200 to-purple-200 rounded-md flex items-center justify-center overflow-hidden">
@@ -353,14 +359,14 @@ export default function SecretPage() {
     { id: 11, x: 85, y: 50, delay: 5.5 },
   ];
 
-  // Photos array - Using local images from public/safa folder
+  // Photos array - Using Cloudinary for reliable hosting
   const photos = [
-    "/safa/photo1.jpeg",
-    "/safa/photo2.jpeg",
-    "/safa/photo3.jpeg",
-    "/safa/photo4.jpeg",
-    "/safa/photo5.jpeg",
-    "/safa/photo6.jpeg",
+    "https://res.cloudinary.com/dmljis5nr/image/upload/v1765403425/WhatsApp_Image_Dec_10_2025_2_rdfzor.jpg",
+    "https://res.cloudinary.com/dmljis5nr/image/upload/v1765403439/WhatsApp_Image_Dec_10_2025_rrk19v.jpg",
+    "https://res.cloudinary.com/dmljis5nr/image/upload/v1765403458/WhatsApp_Image_Dec_10_2025_1_u4cvmb.jpg",
+    "https://res.cloudinary.com/dmljis5nr/image/upload/v1765403481/WhatsApp_Image_Dec_10_2025_3_cvgstv.jpg",
+    "https://res.cloudinary.com/dmljis5nr/image/upload/v1765403498/WhatsApp_Image_Dec_10_2025_4_jdybl7.jpg",
+    "https://res.cloudinary.com/dmljis5nr/image/upload/v1765403515/WhatsApp_Image_Dec_10_2025_5_cxnnea.jpg",
   ];
 
   // Pre-calculated random positions and delays for photos (only 4 for cleaner look)
