@@ -101,11 +101,10 @@ const Button = ({
       className={cn(
         buttonVariants({ variant, size, className }),
         border,
-        "group relative overflow-visible bg-transparent shadow-none outline-none ring-0"
+        "group relative overflow-visible"
       )}
       type={type}
       onClick={onClick}
-      style={{ boxShadow: "none", outline: "none" }}
       {...rest}
     >
       {glow && (

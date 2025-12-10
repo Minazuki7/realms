@@ -93,7 +93,12 @@ export default function AdminPage() {
               disabled={loading}
             />
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading}
+              gradientBg={true}
+            >
               {loading ? "Logging in..." : "Login"}
             </Button>
 
