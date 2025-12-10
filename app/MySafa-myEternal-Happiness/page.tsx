@@ -355,12 +355,12 @@ export default function SecretPage() {
 
   // Photos array - Using local images from public/safa folder
   const photos = [
-    "/safa/WhatsApp Image Dec 10 2025.jpeg",
-    "/safa/WhatsApp Image Dec 10 2025 (1).jpeg",
-    "/safa/WhatsApp Image Dec 10 2025 (2).jpeg",
-    "/safa/WhatsApp Image Dec 10 2025 (3).jpeg",
-    "/safa/WhatsApp Image Dec 10 2025 (4).jpeg",
-    "/safa/WhatsApp Image Dec 10 2025 (5).jpeg",
+    "/safa/photo1.jpeg",
+    "/safa/photo2.jpeg",
+    "/safa/photo3.jpeg",
+    "/safa/photo4.jpeg",
+    "/safa/photo5.jpeg",
+    "/safa/photo6.jpeg",
   ];
 
   // Pre-calculated random positions and delays for photos (only 4 for cleaner look)
